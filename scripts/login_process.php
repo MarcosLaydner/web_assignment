@@ -11,8 +11,7 @@ if ( isset($_POST['username']) ) {
   // check the password matches
   if ($hashed_password === $user_data['pass']) {
     $_SESSION['user'] = $user_data;
-    echo var_dump($SESSION['user']);
-    // header('location: index.php');
+    header('location: index.php');
   } else {
     echo "password was wrong";
   }

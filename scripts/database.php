@@ -12,9 +12,9 @@
 $db = array();
 
 // CHANGE THESE TO MATCH YOUR SETUP!
-$db['host'] = "cseemyweb.essex.ac.uk";
-$db['user'] = "ms19238";
-$db['pass'] = "secret";
+$db['host'] = "localhost";
+$db['user'] = "root";
+$db['pass'] = "root";
 $db['name'] = "ce154_ms19238";
 
 /**
