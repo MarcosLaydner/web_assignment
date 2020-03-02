@@ -12,7 +12,7 @@ database. You can customise the SQL script to suit your needs, but you should no
 data. I have provided a sample database design with this document to get you started. Your
 submission should contain the (working) reset script.
 The website will consist of four key parts:
-- A list of games (the games catalogue)
+- ~A list of games (the games catalogue)~
 - Game Reviews (submitted by users)
-- Game Bookmarks (a simplified wishlist)
-- User accounts
+- ~Game Bookmarks (a simplified wishlist)~
+- ~User accounts~
