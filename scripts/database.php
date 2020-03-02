@@ -91,6 +91,38 @@ function get_game($link, $game) {
     return $user;
 }
 
+function get_games_filtered($link, $filter) {
+
+    $stmt = $link->prepare("select * from games where title LIKE ? or genre LIKE ?");
+    if ( !$stmt ) {
+        die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
+    }
+
+    $filter = "%" . $filter . "%";
+
+    $bind = $stmt->bind_param("ss", $filter, $filter);
+    if ( !$bind ) {
+        die("could not bind params: " . $stmt->error);
+    }
+
+    if ( !$stmt->execute() ) {
+        die("couldn't execute statement");
+    }
+
+    $result = $stmt->get_result();
+    while ( $row = $result->fetch_assoc() ) {
+        $games[] = $row;
+    }
+
+    if (isset($games)) {
+        return $games;
+    } else {
+        return array();
+    }
+
+    
+
+}
 
 function save_message($link, $data) {
     // prepared statemenets = no sql injection \o/

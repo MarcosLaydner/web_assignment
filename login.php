@@ -13,11 +13,11 @@
     <form class='login' method='POST'>
         <div class="form-group">
             <label for="username">Username</label>
-            <input name='username' type="text" class="form-control" placeholder="Enter username">
+            <input name='username' type="text" class="form-control" placeholder="Enter username" required>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input name='password' type="password" class="form-control" placeholder="Password">
+            <input name='password' type="password" class="form-control" placeholder="Password" required>
         </div>
         <div id="err_msg">
 

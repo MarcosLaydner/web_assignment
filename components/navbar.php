@@ -7,34 +7,34 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     
   <div class="nav navbar-nav ml-auto">
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0" method='GET'> 
+      <input name='search'class="form-control mr-sm-2" type="search" placeholder="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
 
-    <ul class="nav navbar-nav ml-auto">
-      <?php
-      
-        if (isset($_SESSION['user']) ) {
-          $user_menu = "<li class='nav-item dropdown'>
-                    <a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown'>".$_SESSION['user']['uname']."</a>
-                    <div class='dropdown-menu dropdown-menu-right'>
-                        <a href='#' class='dropdown-item'>Bookmarks</a>";
+  <ul class="nav navbar-nav ml-auto">
+    <?php
+    
+      if (isset($_SESSION['user']) ) {
+        $user_menu = "<li class='nav-item dropdown'>
+                  <a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown'>".$_SESSION['user']['uname']."</a>
+                  <div class='dropdown-menu dropdown-menu-right'>
+                      <a href='#' class='dropdown-item'>Bookmarks</a>";
 
-          if ($_SESSION['user']['is_admin']){
-            $user_menu =  $user_menu . "<a href='new_game.php' class='dropdown-item'>Create Game</a>";
-          }
-          $user_menu = $user_menu . "<div class='dropdown-divider'></div>
-                        <a href='logout.php'class='dropdown-item'>Logout</a>
-                    </div>
-                </li>";
-
-          echo $user_menu;
-        } else {
-          echo "<a href='login.php'>Login</a>";
+        if ($_SESSION['user']['is_admin']){
+          $user_menu =  $user_menu . "<a href='new_game.php' class='dropdown-item'>Create Game</a>";
         }
-      
-      ?>
-    </ul>
+        $user_menu = $user_menu . "<div class='dropdown-divider'></div>
+                      <a href='logout.php'class='dropdown-item'>Logout</a>
+                  </div>
+              </li>";
+
+        echo $user_menu;
+      } else {
+        echo "<a href='login.php'>Login</a>";
+      }
+    
+    ?>
+  </ul>
 </nav>
