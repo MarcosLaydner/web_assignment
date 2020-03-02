@@ -1,8 +1,27 @@
-.warning{
-    text-align: center;
-    margin: 5%;
+.bookmark{
+    text-align: -webkit-center;
+    margin: 2%;
+    margin-bottom: 0;
+    width: 50%;
+    overflow: hidden;
+}
+
+.bkmk-card{
+    padding: 2% 0 0 0;
+}
+
+.removeBookmark{
+    margin: 0;
+    width: 100%;
+    border-radius: 0;
 }
 
 .login{
     margin: 5%;
 }
+
+#logout{
+    text-align: center;
+    margin: 5%;
+}
+

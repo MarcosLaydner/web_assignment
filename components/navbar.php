@@ -20,7 +20,7 @@
         $user_menu = "<li class='nav-item dropdown'>
                   <a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown'>".$_SESSION['user']['uname']."</a>
                   <div class='dropdown-menu dropdown-menu-right'>
-                      <a href='#' class='dropdown-item'>Bookmarks</a>";
+                      <a href='bookmarks.php' class='dropdown-item'>Bookmarks</a>";
 
         if ($_SESSION['user']['is_admin']){
           $user_menu =  $user_menu . "<a href='new_game.php' class='dropdown-item'>Create Game</a>";

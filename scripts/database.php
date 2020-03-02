@@ -119,9 +119,27 @@ function get_games_filtered($link, $filter) {
     } else {
         return array();
     }
+}
 
+function get_bookmarks($link, $user_id) {
+
+    $results = $link->query("SELECT games.* FROM games JOIN bookmarks ON 
+    games.id = bookmarks.game_id WHERE user_id = ". $user_id. ";");
+
+    if ( !$results ) {
+        return records;
+    }
+
+    while ( $row = $results->fetch_assoc() ) {
+        $records[] = $row;
+    }
     
+    return $records;
+}
 
+function delete_bookmark($link, $game_id, $user_id) {
+
+    return $link->query("DELETE FROM bookmarks WHERE game_id = ". $game_id . " AND user_id = ". $user_id. ";");
 }
 
 function save_message($link, $data) {
