@@ -22,7 +22,7 @@
     
             foreach ($bookmarks as $bookmark => $data) {
     
-                echo " <div class='col-sm-12 bookmark'> <div class='card bookmark'>
+                echo " <div class='col-sm-12 bookmark '> <div class='card bookmark'>
                             <img class='card-img-top' src='".$data['image']."' alt='Card image cap'>
                             <div class='card-body bkmk-card'>
                                 <h5>".$data['title']."</h5>
@@ -38,7 +38,8 @@
             }
             echo "</div>";
         } else {
-            echo "<h4 class='warning'>You have no bookmarks yet. Look at our catalogue and find a game tha you like!</h4>";
+            echo "<h4 class='warning'>You have no bookmarks yet. 
+            Look at our <a href='index.php'>catalogue</a> and find a game that you like!</h4>";
         }
         $link->close();
     ?>

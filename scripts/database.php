@@ -37,7 +37,7 @@ function get_games($link) {
 
     // didn't work? return no results
     if ( !$results ) {
-        return records;
+        return $records;
     }
 
     while ( $row = $results->fetch_assoc() ) {
@@ -127,14 +127,18 @@ function get_bookmarks($link, $user_id) {
     games.id = bookmarks.game_id WHERE user_id = ". $user_id. ";");
 
     if ( !$results ) {
-        return records;
+        return array();
     }
 
     while ( $row = $results->fetch_assoc() ) {
-        $records[] = $row;
+        $bookmarks[] = $row;
     }
     
-    return $records;
+    if (isset($bookmarks)) {
+        return $bookmarks;
+    } else {
+        return array();
+    }
 }
 
 function delete_bookmark($link, $game_id, $user_id) {

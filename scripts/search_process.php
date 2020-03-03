@@ -15,7 +15,7 @@
 
         foreach ($games as $game => $data) {
 
-            echo " <div class='col-sm-3'> <div class='card'>
+            echo " <div class='col-sm-3 main-cards'> <div class='card h-100'>
                         <img class='card-img-top' src='".$data['image']."' alt='Card image cap'>
                         <div class='card-body'>
                             <h5>".$data['title']."</h5>
