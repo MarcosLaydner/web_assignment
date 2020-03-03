@@ -146,6 +146,26 @@ function delete_bookmark($link, $game_id, $user_id) {
     return $link->query("DELETE FROM bookmarks WHERE game_id = ". $game_id . " AND user_id = ". $user_id. ";");
 }
 
+function create_game($link, $title, $image, $genre, $rating) {
+
+    $stmt = $link->prepare("insert into games values (NULL,?,?,?,?)");
+    if ( !$stmt ) {
+        die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
+    }
+
+    $result = $stmt->bind_param("sssi", $title, $image, $genre, $rating);
+    if ( !$result ) {
+        die("could not bind params: " . $stmt->error);
+    }
+
+    if ($stmt->execute()){
+        return true;
+    } else {
+        die("Deu ruim: " . $stmt->error);
+    }
+        
+}
+
 function save_message($link, $data) {
     // prepared statemenets = no sql injection \o/
 

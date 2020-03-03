@@ -14,10 +14,10 @@ if ( isset($_POST['username']) ) {
       $_SESSION['user'] = $user_data;
       header('location: index.php');
     } else {
-      echo "<h6 class='login'>Your password does not match</h6>";
+      echo "<h6 class='form'>Your password does not match</h6>";
     }
   } else {
-    echo "<h6 class='login'>Your username or password is incorrect</h6>";
+    echo "<h6 class='form'>Your username or password is incorrect</h6>";
   }
   $link->close();
 }
