@@ -16,6 +16,21 @@
     border-radius: 0;
 }
 
+.game-redirect{
+    font-size: 1.25rem;
+    background-color: transparent;
+    border: 0;
+    width: 100%;
+    white-space: normal;
+    text-align: left;
+    padding: 0;
+    cursor: pointer;
+}
+
+.game-redirect:hover {
+    color: #444444;
+}
+
 .form{
     margin: 5%;
 }

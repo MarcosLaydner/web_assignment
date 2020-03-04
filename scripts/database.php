@@ -71,7 +71,29 @@ function get_user($link, $uname) {
 
 function get_game($link, $game) {
 
-    $stmt = $link->prepare("select * from games where tile = ?");
+    $stmt = $link->prepare("select * from games where id = ?");
+    if ( !$stmt ) {
+        die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
+    }
+
+    $bind = $stmt->bind_param("i", $game);
+    if ( !$bind ) {
+        die("could not bind params: " . $stmt->error);
+    }
+
+    if ( !$stmt->execute() ) {
+        die("couldn't execute statement");
+    }
+
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    return $user;
+}
+
+function get_reviews($link, $game) {
+
+    $stmt = $link->prepare("select * from reviews where game_id = ?");
     if ( !$stmt ) {
         die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
     }
@@ -86,9 +108,15 @@ function get_game($link, $game) {
     }
 
     $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    while ( $row = $result->fetch_assoc() ) {
+        $reviews[] = $row;
+    }
 
-    return $user;
+    if (isset($reviews)) {
+        return $reviews;
+    } else {
+        return array();
+    }
 }
 
 function get_games_filtered($link, $filter) {
@@ -166,26 +194,3 @@ function create_game($link, $title, $image, $genre, $rating) {
         
 }
 
-function save_message($link, $data) {
-    // prepared statemenets = no sql injection \o/
-
-    // first we create the statement
-    $stmt = $link->prepare("insert into message(name, email, reason, message) values (?,?,?,?)");
-    if ( !$stmt ) {
-        die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
-    }
-
-    // then we bind the parameters
-    // s = string, i = integer
-    $result = $stmt->bind_param("ssis", $data['name'], $data['email'], $data['reason'], $data['message']);
-    if ( !$result ) {
-        die("could not bind params: " . $stmt->error);
-    }
-
-    // finally, execute
-    if ( !$stmt->execute() ) {
-        die("couldn't execute statement");
-    }
-
-    // you can also alter data and call execute again to send another message...
-}
