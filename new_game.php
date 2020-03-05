@@ -6,36 +6,47 @@
         <link rel="stylesheet" href="styles.css">
     </header>
     <body>
-    <?php include('components/navbar.php'); ?>
+    <?php 
+        
+        include('components/navbar.php'); 
 
-    <form class='form' method='POST'>
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input name='title' type="text" class="form-control" placeholder="Enter title" required>
-        </div>
-        <div class="form-group">
-            <label for="image">Image url</label>
-            <input name='image' type="text" class="form-control" placeholder="Enter image url" required>
-        </div>
-        <div class="form-group">
-            <label for="genre">State</label>
-            <select name="genre" class="form-control">
-                <option>rpg</option>
-                <option>sim</option>
-                <option>str</option>
-                <option>fps</option>
-                <option>???</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="rating">Metacritic Score</label>
-            <input name='rating' type="number" class="form-control" placeholder="Enter Metacritic Score" required>
-        </div>
+        if (!isset($_SESSION['user'])) {
+            header('location: login.php');
+        } elseif ($_SESSION['user']['is_admin']) {
 
-        <input type="submit" class="btn btn-primary" value="Submit">
-    </form>
+            echo "<form class='form' method='POST'>
+                <div class='form-group'>
+                    <label for='title'>Title</label>
+                    <input name='title' type='text' class='form-control' placeholder='Enter title' required>
+                </div>
+                <div class='form-group'>
+                    <label for='image'>Image url</label>
+                    <input name='image' type='text' class='form-control' placeholder='Enter image url' required>
+                </div>
+                <div class='form-group'>
+                    <label for='genre'>State</label>
+                    <select name='genre' class='form-control'>
+                        <option>rpg</option>
+                        <option>sim</option>
+                        <option>str</option>
+                        <option>fps</option>
+                        <option>???</option>
+                    </select>
+                </div>
+                <div class='form-group'>
+                    <label for='rating'>Metacritic Score</label>
+                    <input name='rating' type='number' class='form-control' placeholder='Enter Metacritic Score' required>
+                </div>
 
-    <?php include('scripts/create_game_process.php'); ?>
+                <input type='submit' class='btn btn-primary' value='Submit'>
+            </form>";
+
+            include('scripts/create_game_process.php'); 
+        } else {
+            header('location: index.php');
+        }
+
+    ?>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

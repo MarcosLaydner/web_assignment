@@ -2,7 +2,7 @@
 <html>
     <header>
         
-        <title>Original Game Catalogue</title>
+        <title>Your Bookmarks</title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="styles.css">
@@ -13,6 +13,10 @@
     <?php include('scripts/bookmarks_process.php');?>
 
     <?php
+        if (!isset($_SESSION['user'])) {
+            header('location: login.php');
+        }
+
         $link = connect();
 
         $bookmarks = get_bookmarks($link, $_SESSION['user']['id']);

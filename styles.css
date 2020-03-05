@@ -33,6 +33,7 @@
 
 .form{
     margin: 5%;
+    text-align: left;
 }
 
 #logout{
@@ -49,3 +50,28 @@
     margin-top: 4%;
 }
 
+.card{
+    background-color: #f8f9fa!important;
+}
+
+.review-card{
+    margin: 0 2%;
+    width: 80%;
+    overflow: hidden;
+}
+
+.review-list{
+    margin-top: 2%;
+    text-align: -webkit-center;
+}
+
+.your-review{
+    text-align: -webkit-center;
+    margin: 3%;
+}
+
+.title {
+    border-bottom: 1px solid black;
+    width: 50%;
+    padding-bottom: 1%;
+}
