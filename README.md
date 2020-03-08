@@ -13,6 +13,6 @@ data. I have provided a sample database design with this document to get you sta
 submission should contain the (working) reset script.
 The website will consist of four key parts:
 - ~A list of games (the games catalogue)~
-- ˜Game Reviews (submitted by users)˜
+- ~Game Reviews (submitted by users)~
 - ~Game Bookmarks (a simplified wishlist)~
 - ~User accounts~
