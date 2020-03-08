@@ -1,3 +1,4 @@
+<!-- 1900187 -->
 <?php
 // Provided by Joseph Walton-Rivers for ce154
 
@@ -33,7 +34,8 @@ function connect(){
 function get_games($link) {
     $records = array();
 
-    $results = $link->query("SELECT * FROM games");
+    $results = $link->query("SELECT games.id id, games.title title, games.image image, genres.title genre, 
+    games.rating rating  from games JOIN genres ON games.genre = genres.id ORDER BY games.id");
 
     // didn't work? return no results
     if ( !$results ) {
@@ -71,7 +73,10 @@ function get_user($link, $uname) {
 
 function get_game($link, $game) {
 
-    $stmt = $link->prepare("select * from games where id = ?");
+    $stmt = $link->prepare("SELECT games.id id, games.title title, games.image image, 
+    genres.title genre, games.rating rating  from games JOIN genres ON games.genre = genres.id 
+    WHERE games.id = ?");
+
     if ( !$stmt ) {
         die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
     }
@@ -121,14 +126,17 @@ function get_reviews($link, $game) {
 
 function get_games_filtered($link, $filter) {
 
-    $stmt = $link->prepare("select * from games where title LIKE ? or genre LIKE ?");
+    $stmt = $link->prepare("SELECT games.id id, games.title title, games.image image, 
+    genres.title genre, games.rating rating  from games JOIN genres ON games.genre = genres.id 
+    WHERE games.title LIKE ? OR games.genre LIKE ? OR genres.title LIKE ? ORDER BY games.id");
+
     if ( !$stmt ) {
         die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
     }
 
     $filter = "%" . $filter . "%";
 
-    $bind = $stmt->bind_param("ss", $filter, $filter);
+    $bind = $stmt->bind_param("sss", $filter, $filter, $filter);
     if ( !$bind ) {
         die("could not bind params: " . $stmt->error);
     }
@@ -149,9 +157,38 @@ function get_games_filtered($link, $filter) {
     }
 }
 
+function game_is_bookmarked($link, $game_id, $user_id){
+    $stmt = $link->prepare("SELECT * from bookmarks where game_id = ? AND user_id = ?");
+    if ( !$stmt ) {
+        die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
+    }
+
+    $bind = $stmt->bind_param("ii", $game_id, $user_id);
+    if ( !$bind ) {
+        die("could not bind params: " . $stmt->error);
+    }
+
+    if ( !$stmt->execute() ) {
+        die("couldn't execute statement");
+    }
+
+    $result = $stmt->get_result();
+    while ( $row = $result->fetch_assoc() ) {
+        $reviews[] = $row;
+    }
+
+    if (isset($reviews)) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
 function get_bookmarks($link, $user_id) {
 
-    $results = $link->query("SELECT games.* FROM games JOIN bookmarks ON 
+    $results = $link->query("SELECT games.id id, games.title title, games.image image, 
+    genres.title genre, games.rating rating FROM games JOIN genres ON games.genre = genres.id 
+    JOIN bookmarks ON 
     games.id = bookmarks.game_id WHERE user_id = ". $user_id. ";");
 
     if ( !$results ) {
@@ -169,6 +206,26 @@ function get_bookmarks($link, $user_id) {
     }
 }
 
+function add_bookmark($link, $game_id, $user_id) {
+
+    $stmt = $link->prepare("insert into bookmarks values (?,?)");
+    if ( !$stmt ) {
+        die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
+    }
+
+    $result = $stmt->bind_param("si", $user_id, $game_id);
+    if ( !$result ) {
+        die("could not bind params: " . $stmt->error);
+    }
+
+    if ($stmt->execute()){
+        return true;
+    } else {
+        die("Deu ruim: " . $stmt->error);
+    }
+        
+}
+
 function delete_bookmark($link, $game_id, $user_id) {
 
     return $link->query("DELETE FROM bookmarks WHERE game_id = ". $game_id . " AND user_id = ". $user_id. ";");
@@ -182,6 +239,25 @@ function post_review($link, $user_id, $game_id, $title, $rating, $review) {
     }
 
     $result = $stmt->bind_param("iiiss", $user_id, $game_id, $rating, $title, $review);
+    if ( !$result ) {
+        die("could not bind params: " . $stmt->error);
+    }
+
+    if ($stmt->execute()){
+        return true;
+    } else {
+        die("Deu ruim: " . $stmt->error);
+    }  
+}
+
+function edit_review($link, $user_id, $game_id, $title, $rating, $review) {
+
+    $stmt = $link->prepare("UPDATE reviews SET title = ?, rating = ?, review = ? WHERE game_id = ? AND user_id = ?");
+    if ( !$stmt ) {
+        die("could not prepare statement: " . $link->errno . ", error: " . $link->error);
+    }
+
+    $result = $stmt->bind_param("sisii", $title, $rating, $review, $game_id, $user_id);
     if ( !$result ) {
         die("could not bind params: " . $stmt->error);
     }

@@ -1,3 +1,4 @@
+<!-- 1900187 -->
 <?php session_start(); ?>
 <html>
     <header>
@@ -10,7 +11,6 @@
     <body>
     <?php include('components/navbar.php');?>
     <?php include('scripts/database.php');?>
-    <?php include('scripts/bookmarks_process.php');?>
 
     <?php
         if (!isset($_SESSION['user'])) {
@@ -22,6 +22,7 @@
         $bookmarks = get_bookmarks($link, $_SESSION['user']['id']);
 
         if (sizeof($bookmarks) > 0) {
+            include('scripts/bookmarks_process.php');
             echo "<div class='row'>";
     
             foreach ($bookmarks as $bookmark => $data) {
@@ -29,7 +30,10 @@
                 echo " <div class='col-sm-12 bookmark '> <div class='card bookmark'>
                             <img class='card-img-top' src='".$data['image']."' alt='Card image cap'>
                             <div class='card-body bkmk-card'>
-                                <h5>".$data['title']."</h5>
+                                <form action='game_info.php' method='GET'>
+                                    <input type='hidden' name='game_id' value=\"". $data['id'] ."\">
+                                    <input class='game-redirect bkmk' type='submit' value=\"".$data['title']."\">
+                                </form>
                                 <h6>".$data['genre']."</h6>
                                 <p>Rating: ".$data['rating']."</p>
                                 <form class='removeBookmark' method='POST'>

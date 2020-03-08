@@ -1,3 +1,4 @@
+<!-- 1900187 -->
 <?php
     include('scripts/database.php');
 
